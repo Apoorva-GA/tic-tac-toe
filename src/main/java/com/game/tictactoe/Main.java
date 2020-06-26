@@ -12,10 +12,8 @@ public class Main {
         outputHandler.print(grid.printGrid());
 
         outputHandler.print("Enter player1's name and symbol:");
-        Player player1 = inputHandler.getPlayer("player1");
-        outputHandler.print("Enter player2's name and symbol:");
-        Player player2 = inputHandler.getPlayer("player2");
-
+        Player player1 = inputHandler.getPlayer(PlayerType.HUMAN);
+        Player player2 = new Player("Computer", 'O', PlayerType.COMPUTER);
         Game game = new Game(grid, player1, player2);
         game.startGame(inputHandler, outputHandler);
     }

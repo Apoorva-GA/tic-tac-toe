@@ -7,19 +7,14 @@ public class InputHandler {
         this.inputScanner = inputScanner;
     }
 
-    public Player getPlayer(String player) {
+    public Player getPlayer(PlayerType playerType) {
         String playerName = inputScanner.readString();
         String playerSymbol = inputScanner.readString();
         if (playerSymbol.length() != 1) {
-            if (player.equals("player1")) {
-                System.out.println("Invalid symbol, assigning default symbol 'X'");
-                return new Player(playerName, 'X');
-            } else {
-                System.out.println("Invalid symbol, assigning default symbol 'O'");
-                return new Player(playerName, 'O');
-            }
+            System.out.println("Invalid symbol, assigning default symbol 'X'");
+            return new Player(playerName, 'X', playerType);
         }
-        return new Player(playerName, playerSymbol.charAt(0));
+        return new Player(playerName, playerSymbol.charAt(0), playerType);
     }
 
     public int getMove() {

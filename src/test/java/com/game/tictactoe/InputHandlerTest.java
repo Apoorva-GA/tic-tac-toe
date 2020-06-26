@@ -1,8 +1,5 @@
 package com.game.tictactoe;
 
-import com.game.tictactoe.InputHandler;
-import com.game.tictactoe.InputScanner;
-import com.game.tictactoe.Player;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.mockito.Mock;
@@ -41,10 +38,10 @@ class InputHandlerTest {
     public void shouldGetPlayerWithEnteredNameAndSymbol() {
         String name = "player1";
         String symbol = "X";
-        Player expectedPlayer = new Player(name, symbol.charAt(0));
+        Player expectedPlayer = new Player(name, symbol.charAt(0), PlayerType.HUMAN);
         when(inputScanner.readString()).thenReturn(name).thenReturn(symbol);
 
-        Player actualPlayer = inputHandler.getPlayer("player1");
+        Player actualPlayer = inputHandler.getPlayer(PlayerType.HUMAN);
 
         assertEquals(expectedPlayer.getName(), actualPlayer.getName());
         assertEquals(expectedPlayer.getSymbol(), actualPlayer.getSymbol());
@@ -54,23 +51,10 @@ class InputHandlerTest {
     public void shouldGetPlayer1WithDefaultSymbol() {
         String name = "player1";
         String symbol = "aws";
-        Player expectedPlayer = new Player(name, 'X');
+        Player expectedPlayer = new Player(name, 'X', PlayerType.HUMAN);
         when(inputScanner.readString()).thenReturn(name).thenReturn(symbol);
 
-        Player actualPlayer = inputHandler.getPlayer("player1");
-
-        assertEquals(expectedPlayer.getName(), actualPlayer.getName());
-        assertEquals(expectedPlayer.getSymbol(), actualPlayer.getSymbol());
-    }
-
-    @Test
-    public void shouldGetPlayer2WithDefaultSymbol() {
-        String name = "player2";
-        String symbol = "aws";
-        Player expectedPlayer = new Player(name, 'O');
-        when(inputScanner.readString()).thenReturn(name).thenReturn(symbol);
-
-        Player actualPlayer = inputHandler.getPlayer("player2");
+        Player actualPlayer = inputHandler.getPlayer(PlayerType.HUMAN);
 
         assertEquals(expectedPlayer.getName(), actualPlayer.getName());
         assertEquals(expectedPlayer.getSymbol(), actualPlayer.getSymbol());

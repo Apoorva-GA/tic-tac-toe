@@ -1,10 +1,5 @@
 package com.game.tictactoe;
 
-import com.game.tictactoe.Game;
-import com.game.tictactoe.Grid;
-import com.game.tictactoe.InputHandler;
-import com.game.tictactoe.OutputHandler;
-import com.game.tictactoe.Player;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.mockito.Mock;
@@ -86,12 +81,14 @@ class GameTest {
     }
 
     @Test
-    public void shouldStartGame() {
+    public void shouldStartGameWhenBothPlayersAreHuman() {
         char[] gameMoves = {' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' '};
 
         when(grid.getGameMoves()).thenReturn(gameMoves);
         when(inputHandler.getMove()).thenReturn(1).thenReturn(1).thenReturn(-1).thenReturn(2);
         when(player1.getSymbol()).thenReturn('x');
+        when(player1.getPlayerType()).thenReturn(PlayerType.HUMAN);
+        when(player2.getPlayerType()).thenReturn(PlayerType.HUMAN);
         when(player1.hasWon()).thenReturn(false);
         when(player2.hasWon()).thenReturn(true);
 
@@ -102,5 +99,47 @@ class GameTest {
         verify(player1, times(1)).getSymbol();
         verify(player1, times(1)).hasWon();
         verify(player2, times(1)).hasWon();
+        verify(player1, times(1)).makeMove(1);
+        verify(player2, times(1)).makeMove(2);
+    }
+
+    @Test
+    public void shouldVerifyThatGameIsTie() {
+        char[] gameMoves = {' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' '};
+
+        when(grid.getGameMoves()).thenReturn(gameMoves);
+        when(inputHandler.getMove()).thenReturn(1).thenReturn(2).thenReturn(5).thenReturn(4)
+                .thenReturn(3).thenReturn(7).thenReturn(8).thenReturn(9).thenReturn(6);
+        when(player1.getSymbol()).thenReturn('x');
+        when(player1.getPlayerType()).thenReturn(PlayerType.HUMAN);
+        when(player2.getPlayerType()).thenReturn(PlayerType.HUMAN);
+        when(player1.hasWon()).thenReturn(false);
+        when(player2.hasWon()).thenReturn(false);
+
+        game.startGame(inputHandler, outputHandler);
+
+        verify(outputHandler, times(1)).print("Its a tie!!!");
+    }
+
+    @Test
+    public void shouldStartGameWhenOnePlayerIsComputer() {
+        char[] gameMoves = {' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' '};
+
+        when(grid.getGameMoves()).thenReturn(gameMoves);
+        when(inputHandler.getMove()).thenReturn(1);
+        when(player1.getSymbol()).thenReturn('X');
+        when(player1.getPlayerType()).thenReturn(PlayerType.HUMAN);
+        when(player2.getPlayerType()).thenReturn(PlayerType.COMPUTER);
+        when(player1.hasWon()).thenReturn(false);
+        when(player2.hasWon()).thenReturn(true);
+
+        game.startGame(inputHandler, outputHandler);
+
+        verify(grid, times(5)).getGameMoves();
+        verify(inputHandler, times(1)).getMove();
+        verify(player1, times(1)).getSymbol();
+        verify(player1, times(1)).hasWon();
+        verify(player2, times(1)).hasWon();
+        verify(player1, times(1)).makeMove(1);
     }
 }

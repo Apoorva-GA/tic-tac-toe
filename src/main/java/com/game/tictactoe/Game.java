@@ -1,5 +1,7 @@
 package com.game.tictactoe;
 
+import java.util.Random;
+
 public class Game {
     private Player player1;
     private Player player2;
@@ -34,8 +36,7 @@ public class Game {
         int count = grid.getGameMoves().length;
         while (count > 0) {
             Player currentPlayer = getCurrentPlayer();
-            outputHandler.print(currentPlayer.getName() + "'s turn - Play move:");
-            int move = inputHandler.getMove();
+            int move = getMove(inputHandler, outputHandler, currentPlayer);
             if (move != -1 && makeMove(move)) {
                 outputHandler.print(grid.printGrid());
                 if (currentPlayer.hasWon()) {
@@ -49,5 +50,18 @@ public class Game {
             }
         }
         outputHandler.print("Its a tie!!!");
+    }
+
+    private int getMove(InputHandler inputHandler, OutputHandler outputHandler, Player currentPlayer) {
+        int move = 0;
+        if (currentPlayer.getPlayerType() == PlayerType.HUMAN) {
+            outputHandler.print(currentPlayer.getName() + "'s turn - Play move (1-9):");
+            move = inputHandler.getMove();
+        } else if (currentPlayer.getPlayerType() == PlayerType.COMPUTER) {
+            outputHandler.print(currentPlayer.getName() + "'s turn");
+            Random random = new Random();
+            move = random.nextInt(9) + 1;
+        }
+        return move;
     }
 }

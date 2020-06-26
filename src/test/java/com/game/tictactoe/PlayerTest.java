@@ -14,7 +14,7 @@ class PlayerTest {
 
     @BeforeEach
     public void init() {
-        player1 = new Player("player1", 'x');
+        player1 = new Player("player1", 'x', PlayerType.HUMAN);
     }
 
     @Test

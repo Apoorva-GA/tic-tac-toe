@@ -7,12 +7,14 @@ import static java.util.Arrays.asList;
 public class Player {
     private String name;
     private char symbol;
+    private PlayerType playerType;
     private ArrayList<Integer> moves;
     private ArrayList<ArrayList<Integer>> winningCombinations;
 
-    public Player(String name, char symbol) {
+    public Player(String name, char symbol, PlayerType playerType) {
         this.name = name;
         this.symbol = symbol;
+        this.playerType = playerType;
         this.moves = new ArrayList<>();
         this.winningCombinations = createWinningCombinations();
     }
@@ -27,6 +29,10 @@ public class Player {
 
     public ArrayList<Integer> getMoves() {
         return moves;
+    }
+
+    public PlayerType getPlayerType() {
+        return playerType;
     }
 
     private ArrayList<ArrayList<Integer>> createWinningCombinations() {
