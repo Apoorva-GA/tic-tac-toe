@@ -11,10 +11,10 @@ public class Main {
         Grid grid = new Grid(gameMoves);
         outputHandler.print(grid.printGrid());
 
-        outputHandler.print("Enter player1's name and symbol:");
+        outputHandler.print("Enter player's name and symbol:");
         Player player1 = inputHandler.getPlayer(PlayerType.HUMAN);
         Player player2 = new Player("Computer", 'O', PlayerType.COMPUTER);
-        Game game = new Game(grid, player1, player2);
+        Game game = new Game(grid, player2, player1);
         game.startGame(inputHandler, outputHandler);
     }
 }

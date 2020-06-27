@@ -128,6 +128,8 @@ class GameTest {
         when(grid.getGameMoves()).thenReturn(gameMoves);
         when(inputHandler.getMove()).thenReturn(1);
         when(player1.getSymbol()).thenReturn('X');
+        when(player2.getName()).thenReturn("Computer");
+        when(player1.getName()).thenReturn("Apoorva");
         when(player1.getPlayerType()).thenReturn(PlayerType.HUMAN);
         when(player2.getPlayerType()).thenReturn(PlayerType.COMPUTER);
         when(player1.hasWon()).thenReturn(false);
@@ -135,11 +137,47 @@ class GameTest {
 
         game.startGame(inputHandler, outputHandler);
 
-        verify(grid, times(5)).getGameMoves();
+        verify(grid, times(6)).getGameMoves();
         verify(inputHandler, times(1)).getMove();
         verify(player1, times(1)).getSymbol();
         verify(player1, times(1)).hasWon();
         verify(player2, times(1)).hasWon();
         verify(player1, times(1)).makeMove(1);
+    }
+
+    @Test
+    public void shouldEnsurePlayerDoesNotWin() {
+        char[] gameMoves = {' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' '};
+
+        when(grid.getGameMoves()).thenReturn(gameMoves);
+        when(inputHandler.getMove()).thenReturn(2).thenReturn(5).thenReturn(6).thenReturn(7);
+        when(player2.getSymbol()).thenReturn('X');
+        when(player1.getPlayerType()).thenReturn(PlayerType.COMPUTER);
+        when(player2.getPlayerType()).thenReturn(PlayerType.HUMAN);
+        when(player1.hasWon()).thenReturn(false);
+        when(player2.hasWon()).thenReturn(false);
+
+        game.startGame(inputHandler, outputHandler);
+
+        verify(outputHandler, times(1)).print("Its a tie!!!");
+    }
+
+    @Test
+    public void shouldEnsureThatComputerWins() {
+        char[] gameMoves = {' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' '};
+
+        when(grid.getGameMoves()).thenReturn(gameMoves);
+        when(inputHandler.getMove()).thenReturn(9).thenReturn(6).thenReturn(2);
+        when(player2.getSymbol()).thenReturn('X');
+        when(player1.getName()).thenReturn("Computer");
+        when(player2.getName()).thenReturn("Apoorva");
+        when(player1.getPlayerType()).thenReturn(PlayerType.COMPUTER);
+        when(player2.getPlayerType()).thenReturn(PlayerType.HUMAN);
+        when(player2.hasWon()).thenReturn(false);
+        when(player1.hasWon()).thenReturn(false).thenReturn(false).thenReturn(false).thenReturn(true);
+
+        game.startGame(inputHandler, outputHandler);
+
+        verify(outputHandler, times(1)).print("Computer has won!!");
     }
 }

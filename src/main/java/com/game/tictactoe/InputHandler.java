@@ -10,7 +10,7 @@ public class InputHandler {
     public Player getPlayer(PlayerType playerType) {
         String playerName = inputScanner.readString();
         String playerSymbol = inputScanner.readString();
-        if (playerSymbol.length() != 1) {
+        if (playerSymbol.equalsIgnoreCase("O") || playerSymbol.length() != 1) {
             System.out.println("Invalid symbol, assigning default symbol 'X'");
             return new Player(playerName, 'X', playerType);
         }
